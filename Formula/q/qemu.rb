@@ -32,6 +32,7 @@ class Qemu < Formula
   depends_on "glib"
   depends_on "gnutls"
   depends_on "jpeg-turbo"
+  depends_on "libiscsi"
   depends_on "libpng"
   depends_on "libslirp"
   depends_on "libssh"
@@ -41,6 +42,8 @@ class Qemu < Formula
   depends_on "nettle"
   depends_on "pixman"
   depends_on "snappy"
+  depends_on "sphinx-doc"
+  depends_on "usbredir"
   depends_on "vde"
   depends_on "zstd"
 
@@ -78,8 +81,18 @@ class Qemu < Formula
       --enable-vde
       --enable-virtfs
       --enable-zstd
+      --enable-lto
+      --enable-lzo
+      --enable-docs
+      --enable-tools
+      --enable-gcrypt
+      --enable-snappy
+      --enable-libusb
+      --enable-usb-redir
+      --enable-libiscsi
       --extra-cflags=-DNCURSES_WIDECHAR=1
       --disable-sdl
+      --target-list=aarch64-softmmu,arm-softmmu,i386-softmmu,x86_64-softmmu,riscv32-softmmu,riscv64-softmmu
     ]
 
     # Sharing Samba directories in QEMU requires the samba.org smbd which is
@@ -90,7 +103,7 @@ class Qemu < Formula
     args << "--smbd=#{HOMEBREW_PREFIX}/sbin/samba-dot-org-smbd"
 
     args += if OS.mac?
-      ["--disable-gtk", "--enable-cocoa"]
+      ["--disable-gtk", "--enable-cocoa", "--enable-hvf"]
     else
       ["--enable-gtk"]
     end
